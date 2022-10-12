@@ -1,0 +1,34 @@
+{
+  "name": "nodepay",
+  "version": "1.0.0",
+  "description": "An API to accept payment for paystack",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/optimus-pryme/NodePay.git"
+  },
+  "keywords": [
+    "Paystack",
+    "Nodejs",
+    "API"
+  ],
+  "author": "Newman Mortey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/optimus-pryme/NodePay/issues"
+  },
+  "homepage": "https://github.com/optimus-pryme/NodePay#readme",
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "ajv": "^8.11.0",
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2"
+  }
+}

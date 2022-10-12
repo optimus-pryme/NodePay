@@ -1,12 +1,19 @@
+/** Core modules */
 const express = require('express')
 const router = express.Router();
+
+/**
+ * user defined modules 
+ */
 const getAuthURL = require('../services/paystackAPI')
 const paymentValidator = require('../schemas/paymentValidator')
 
 
 
+/** Post request to initialise payment. This returns an authorisation url to complete payment */
 router.post('/initialize-payment', async(req,res) => {
     try {
+        // validate req.body to conform with schema defined
         const {valid,data,error } = paymentValidator(req.body);
         if (!valid){
             res.status(400).json({
@@ -16,15 +23,9 @@ router.post('/initialize-payment', async(req,res) => {
             });
             return;
         }
-
-        const {apiKey}  = data;
-        const {email}   = data;
-        const {amount}  = data;
-        
-        // console.log('key is ',apiKey);
-        // console.log('email is ',email);
-        // console.log('amount is ',amount);
-
+        // destructuring validated data returned
+        const {apiKey,email,amount}  = data;
+        //request option for REST API request to Paystack
         requestOptions ={
             hostname: 'api.paystack.co',
             port: 443,
@@ -35,18 +36,15 @@ router.post('/initialize-payment', async(req,res) => {
                 'Content-Type': 'application/json'
   }
         };
-
-
+        // required parameters for paystack API. Param needs to be string
         requestParam =JSON.stringify({
             email: email,
             amount: amount
         })
 
-        console.log('options is ', requestOptions);
-        console.log('param is ',requestParam);
-
+        //promisified request using https module
         getAuthURL(requestOptions,requestParam).then((apiResponse) =>{
-            res.send(apiResponse);
+            res.status(200).send(apiResponse);
         }).catch(err => {
             res.send({
                 message: 'errror occurred',
@@ -54,22 +52,8 @@ router.post('/initialize-payment', async(req,res) => {
             });
         }) 
 
-        // const reqq = https.request(requestOptions, res => {
-        // let data = ''
-        // res.on('data', (chunk) => {
-        //     data += chunk
-        // });
-        // res.on('end', () => {
-        //     console.log(JSON.parse(data))
-            
-        // })
-        // }).on('error', error => {
-        // console.error(error)
-        // res.send(error)
-        // })
-        // reqq.write(requestParam)
-        // reqq.end()
     } catch (error) {
+        //catching any server error that may occur
         console.log(error);
         res.status(500).send({
             status_code:500,
@@ -78,13 +62,5 @@ router.post('/initialize-payment', async(req,res) => {
         })
     }
 })
-
-
-router.post('/test',(req,res) =>{
-    const {name} = req.body;
-    console.log(req.boady);
-    res.send('thank you')
-})
-
 
 module.exports =  router;

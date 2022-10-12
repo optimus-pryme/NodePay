@@ -1,6 +1,7 @@
 const Ajv = require("ajv")
 const ajv = new Ajv({allErrors: true})
 
+//schema required to validate the req.body
 const paymentSchema = {
   type: "object",
   properties: {

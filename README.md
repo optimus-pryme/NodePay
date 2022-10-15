@@ -8,15 +8,25 @@ application up and running.
 ### What is this repository for?
 
 -   Quick summary
+-    Paystack  Payment API review
 -   Version
 -   [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ---
 
+## Paystack
+
+Paystack is a payment service provider that helps businesses in Africa get paid by anyone, anywhere in the world. Keep mind Paystack is not associated or a subdiary Paypal most confuse them to be associated. While Paypal is not accessible to some part of Africa, Paystack is much open to most African countries if not all. 
+
+To start receiving payment you simply need to create an account on their <b>official [website](https://paystack.com)</b> . Once you complete registration, you will be able to integrate their payment solutions into your applications using their [API](https://api.paystack.com).
+
+The Paystack Application Programming Interface (API) allows you to access and expand the functionality of our dashboard inside your own software. It is designed to be RESTful and is structured around the primary resources with which you will be working, with a few significant exceptions.[(reference here)](https://paystack.com/docs/api/#introduction)
+
+
 ## Requirements
 
 For development, you will only need Node.js and a node global package,npm,
-installed in your environement. You can equally use yarn as your package manager
+installed in your environement. You can equally use yarn as your package manager(if you understand how to use it) but i will not cover it in-depth here.
 
 ### Node
 
@@ -66,9 +76,9 @@ following command.
 
 ## Install
 
-    $ git clone git+ssh://git@bitbucket.org/kojoadobaw/metasolution-alpha.git
-    $ cd metasolution-alpha
-    $ yarn install
+    $ git clone [NodePay](https://github.com/optimus-pryme/NodePay.git)
+    $ cd NodePay
+    $ npm install or yarn install(for yarn lovers ❤️❤️)
 
 ## Configuration
 
@@ -77,36 +87,30 @@ refer to the example.env for app configuration.
 
      $ APP=dev
      $ PORT=*******
-     $ BCRYPT_SALT = *******
-     $ DB_DIALECT=*******
-     $ DB_HOST=*******
-     $ DB_PORT=*******
-     $ DB_NAME=*******
-     $ DB_USER=*******
-     $ DB_PASSWORD=*******
-     $ JWT_ENCRYPTION=****************************
-     $ JWT_EXPIRATION=*******
 
 ## Running the project
 
 -   #### Build Application
 
         $ npm build
+        $ yarn buid
 
 
 -   #### Start Application
 
         $ npm start
+        $ yarn start
 
 -   #### Start Application With Nodemom
 
         $ npm debug
+        $ yarn debug
 
     Application will restart on changes to ./src source folder
 
 ### Who do I talk to?
 
 -   Repo owner or admin
--   Other community or team contact
+-   Also refer to Paystack API
 
 ##

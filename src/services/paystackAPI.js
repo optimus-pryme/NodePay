@@ -32,19 +32,40 @@ const getAuthURL = (options,params) =>{
             data += chunk
         });
         res.on('end', () => {
-            console.log(JSON.parse(data))
             resolve(JSON.parse(data))
         })
-        }).on('error', error => {
-        console.error(error)
-        reject(error)})
-
-        req.write(params)
+        });
+        res.on('error', error => {
+        reject(error)}
+        )
         req.end()
     })
 }
 
+/**
+ * Promisifying function that calls Paystack API for payment verfication using the reference
+ * @param {*} options 
+ * @returns a bearer token 
+ */
+function verifyRef(options) {
+  return new Promise((resolve, reject) => {
+    const req = https.get(options, res => {
+      let data = '';
+      res.on('data', (chunk) => {
+        data += chunk;
+        console.log(data);
+      });
+      res.on('end', () => {
+        console.log(JSON.parse(data));
+        resolve(JSON.parse(data));
+      }).on('error', error => {
+        console.log(error);
+        reject(error);
+      });
+      req.end();
+    });
+  });
+}
 
 
-
-module.exports = getAuthURL;
+module.exports = { getAuthURL, verifyRef }

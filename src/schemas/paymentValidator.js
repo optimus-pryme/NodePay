@@ -14,8 +14,8 @@ const paymentSchema = {
 }
 
 
-const validatePayment = ajv.compile(paymentSchema);
 
+const validatePayment = ajv.compile(paymentSchema);
 const paymentValidator = (data) => {
     const valid = validatePayment( data );
     if ( valid ) return { valid, data };

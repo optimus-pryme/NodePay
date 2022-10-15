@@ -2,11 +2,52 @@
 const express = require('express')
 const router = express.Router();
 
+
 /**
  * user defined modules 
  */
-const getAuthURL = require('../services/paystackAPI')
-const paymentValidator = require('../schemas/paymentValidator')
+// const getAuthURL = require('../services/paystackAPI')
+const {getAuthURL, verifyRef} =  require('../services/paystackAPI');
+const paymentValidator = require('../schemas/paymentValidator');
+const referenceValidator = require('../schemas/referenceValidator');
+
+
+
+router.get('/verify-payment/:ref', (req,res) =>{
+    try {
+        const {valid,data,error} = referenceValidator(req.body);
+        console.log(req)
+        if (!valid){
+            res.status(400).json({
+                status_code : 400,
+                status_message : 'inappropriate data',
+                error: error
+            });
+            return;
+        }
+        const {ref}         = req.params;
+        const {apiKey }     = req.body;
+
+        Options = {
+            hostname: 'api.paystack.co',
+            port: 443,
+            path: `/transaction/verify/`+encodeURIComponent(ref),
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${apiKey}`
+            }
+        };
+
+        verifyRef(Options).then( (data) => { 
+            res.status(200).send(data);
+        } ).catch( (err) => { 
+            console.error(err);
+            res.send(err);
+        } )
+    } catch (error) {
+        console.error('error occured : ',error)
+    }
+})
 
 
 
@@ -62,5 +103,7 @@ router.post('/initialize-payment', async(req,res) => {
         })
     }
 })
+
+
 
 module.exports =  router;
